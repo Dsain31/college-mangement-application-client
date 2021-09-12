@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title size='small'>
+      College Application Management
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button 
+        *ngFor="let element of headerElements"
+        routerLinkActive='active'
+        [routerLink]='element.link'>
+        <ion-icon [name]="element.icon"></ion-icon>
+        <ion-text>{{element.title}}</ion-text>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
