@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { User } from 'src/app/interfaces/user/user';
+import { LoginService } from 'src/app/model/login/login.service';
 import { CommonValidationService } from 'src/app/utils/services/validation/common-validation.service';
 
 @Component({
@@ -11,7 +14,9 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isSubmitted: boolean;
   constructor(private fb: FormBuilder,
-    private commonValidationService: CommonValidationService) { }
+    private commonValidationService: CommonValidationService,
+    private loginService: LoginService,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
     this.initializeProperties();
@@ -22,7 +27,7 @@ export class LoginComponent implements OnInit {
   }
   initializeLoginForm(): void {
     this.loginForm = this.fb.group({
-      username: ['', this.commonValidationService.setCustomValidatorMethods({max: 20})],
+      username: ['', this.commonValidationService.setCustomValidatorMethods()],
       password: ['', this.commonValidationService.setCustomValidatorMethods({min: 6, max: 16})]
     });
   }
@@ -40,7 +45,11 @@ export class LoginComponent implements OnInit {
       this.isSubmitted = true;
       return;
     }
-    console.log(this.loginForm.value);
+    this.loginService.loginUser(this.loginForm.value).subscribe((res: {data: User}) => {
+      localStorage.setItem('id', res.data?._id);
+    }, (error) => {
+      this.toastr.error(error);
+    });
   }
 
   getErrorMessage(options: {formControl: AbstractControl; formControlName: string; maxLength?: number; minLength?: number}): string {

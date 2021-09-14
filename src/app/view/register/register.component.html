@@ -1,3 +1,196 @@
-<p>
-  register works!
-</p>
+<ion-content class="ion-padding">
+  <ion-card class="register-card">
+
+    <ion-card-header>
+      <ion-card-title>
+        Register
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]='registerForm' (ngSubmit)='onSubmit()'>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>User Role</ion-label>
+                <ion-select placeholder="Select role" interface="popover" 
+                  (ionChange)='changeFormByRole($event)'
+                  formControlName='userRole'
+                   value='Student'>
+                  <ion-select-option *ngFor='let userSelect of userSelectRoleList' [value]="userSelect.role">
+                     {{userSelect.value}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-text class="ion-padding" *ngIf='role.invalid && (role.dirty || role.touched || isSubmitted)' color='danger'>
+                <small>{{getErrorMessage({formControl: role, formControlName:'User Role'})}}</small>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position='floating'>First Name</ion-label>
+                <ion-input type='text' name='fName' clearInput='true' formControlName='fName'>
+                </ion-input>
+              </ion-item>
+              <ion-text class="ion-padding" *ngIf='fName.invalid && (fName.dirty || fName.touched || isSubmitted)'
+                color='danger'>
+                <small>{{getErrorMessage({formControl: fName, formControlName:'First Name', maxLength: 20})}}</small>
+              </ion-text>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position='floating'>Last Name</ion-label>
+                <ion-input type='text' name='lName' clearInput='true' formControlName='lName'>
+                </ion-input>
+              </ion-item>
+              <ion-text class="ion-padding" *ngIf='lName.invalid && (lName.dirty || lName.touched || isSubmitted)'
+                color='danger'>
+                <small>{{getErrorMessage({formControl: lName, formControlName:'Last Name', maxLength: 20})}}</small>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position='floating'>Username</ion-label>
+                <ion-input type='text' name='username' clearInput='true' formControlName='username'>
+                </ion-input>
+              </ion-item>
+              <ion-text class="ion-padding"
+                *ngIf='username.invalid && (username.dirty || username.touched || isSubmitted)' color='danger'>
+                <small>{{getErrorMessage({formControl: username, formControlName:'Username', maxLength: 20})}}</small>
+              </ion-text>
+            </ion-col>
+            <ion-col *ngIf='isStudent'>
+              <ion-item>
+                <ion-label position='floating'>Age</ion-label>
+                <ion-input type='text' name='lName' clearInput='true' formControlName='age'>
+                </ion-input>
+              </ion-item>
+              <ion-text class="ion-padding" *ngIf='age.invalid && (age.dirty || age.touched || isSubmitted)'
+                color='danger'>
+                {{getErrorMessage({formControl: age, formControlName:'Age', maxLength: 2})}}
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position='floating'>Email</ion-label>
+                <ion-input type='text' name='email' clearInput='true' formControlName='email'>
+                </ion-input>
+              </ion-item>
+              <ion-text class="ion-padding" *ngIf='email.invalid && (email.dirty || email.touched || isSubmitted)'
+                color='danger'>
+                <small>{{getErrorMessage({formControl: email, formControlName:'Email'})}}</small>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position='floating'>Password</ion-label>
+                <ion-input type='text' name='password' clearInput='true' formControlName='password'>
+                </ion-input>
+              </ion-item>
+              <ion-text class="ion-padding"
+                *ngIf='password.invalid && (password.dirty || password.touched || isSubmitted)' color='danger'>
+                <small>{{getErrorMessage({formControl: password, formControlName: 'Password', maxLength: 16, minLength: 6})}}</small>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf='isStudent'>
+            <ion-col>
+              <ion-item>
+                <ion-label position='floating'>Mobile Number</ion-label>
+                <ion-input type='text' name='mNumber' clearInput='true' formControlName='mobileNumber'>
+                </ion-input>
+              </ion-item>
+              <ion-text class="ion-padding" *ngIf='mNumber.invalid && (mNumber.dirty || mNumber.touched || isSubmitted)'
+                color='danger'>
+                <small>{{getErrorMessage({formControl: mNumber, formControlName:'Mobile Number', maxLength: 10, minLength:10})}}</small>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf='isStudent'>
+            <ion-col>
+              <ion-item>
+                <ion-label position='floating'>Address</ion-label>
+                <ion-input type='text' name='address' clearInput='true' formControlName='address'>
+                </ion-input>
+              </ion-item>
+              <ion-text class="ion-padding" *ngIf='address.invalid && (address.dirty || address.touched || isSubmitted)'
+                color='danger'>
+                <small>{{getErrorMessage({formControl: address, formControlName:'Address'})}}</small>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf='isStudent'>
+            <ion-col>
+              <ion-item>
+                <ion-label>Education</ion-label>
+                <ion-select placeholder="Select education" interface="popover" 
+                  formControlName='education'>
+                  <ion-select-option *ngFor='let education of educationList' [value]="education">
+                     {{education}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-text class="ion-padding" *ngIf='education.invalid && (education.dirty || education.touched || isSubmitted)' color='danger'>
+                <small>{{getErrorMessage({formControl: education, formControlName:'Education'})}}</small>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf='!isStudent'>
+            <ion-col>
+              <ion-item>
+                <ion-label>Department</ion-label>
+                <ion-select placeholder="Select department" interface="popover" 
+                  formControlName='department'>
+                  <ion-select-option *ngFor='let department of departmentList' [value]="department">
+                     {{department}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-text class="ion-padding" *ngIf='department.invalid && (department.dirty || department.touched || isSubmitted)' color='danger'>
+                <small>{{getErrorMessage({formControl: department, formControlName:'Department'})}}</small>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf='isStudent'>
+            <ion-col>
+              <ion-item>
+                <ion-label>Subject</ion-label>
+                <ion-select placeholder="Select subject" interface="popover" 
+                  formControlName='subject'>
+                  <ion-select-option *ngFor='let subject of subjectList' [value]="subject">
+                     {{subject}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-text class="ion-padding" *ngIf='subject.invalid && (subject.dirty || subject.touched || isSubmitted)' color='danger'>
+                <small>{{getErrorMessage({formControl: subject, formControlName:'Subject'})}}</small>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <ion-button type='submit' expand='block' shape="round" fill="outline">
+            Register
+          </ion-button>
+          <div>
+            <ion-row>
+              <ion-col>
+              </ion-col>
+            </ion-row>
+          </div>
+
+        </ion-grid>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
