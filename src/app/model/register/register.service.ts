@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { catchError  } from 'rxjs/operators';
 import { CommonService } from 'src/app/global/service/common.service';
-
+import { Observable } from 'rxjs';
+import {AjaxResponse} from '../../interfaces/ajax-response/ajax.-response'
 @Injectable({
   providedIn: 'root'
 })
@@ -14,8 +15,8 @@ export class RegisterService {
     private commonService: CommonService
   ) { }
 
-  registerUser(queryObj){
-    return this.http.post(this.apiUrl + '/user', queryObj)
+  registerUser(queryObj): Observable<AjaxResponse<never>>{
+    return this.http.post<AjaxResponse<never>>(this.apiUrl + '/user', queryObj)
     .pipe(
       catchError(this.commonService.handleError) // then handle the error
     );

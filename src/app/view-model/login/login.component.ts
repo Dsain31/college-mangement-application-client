@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
       this.isSubmitted = true;
       return;
     }
-    this.loginService.loginUser(this.loginForm.value).subscribe((res: {data: User}) => {
+    this.loginService.loginUser(this.loginForm.value).subscribe((res) => {
       this.authService.isLogIn(res.data?._id);
       localStorage.setItem('id', res.data?._id);
       this.router.navigate(['/home']);

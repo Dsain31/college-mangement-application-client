@@ -104,8 +104,9 @@ export class RegisterComponent implements OnInit {
       this.isSubmitted = true;
       return;
     }
-    this.registerService.registerUser(this.registerForm.value).subscribe((res: {message: string}) => {
+    this.registerService.registerUser(this.registerForm.value).subscribe((res) => {
       this.toastr.success(res.message);
+      this.registerForm.reset();
     }, error => {
       this.toastr.error(error);
     });
