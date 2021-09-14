@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { departmentList, educationList, registerUserSelectRole, subjectList } from 'src/app/global/model/register/register';
+import { registerUserSelectRole, educationList, departmentList, subjectList } from 'src/app/global/modules/register/register';
 import { RegisterService } from 'src/app/model/register/register.service';
 import { CommonStatus } from 'src/app/utils/constants/common/common.status';
 import { UserRoles } from 'src/app/utils/constants/user-roles/user.roles';

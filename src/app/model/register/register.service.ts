@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { catchError  } from 'rxjs/operators';
-import { CommonService } from 'src/app/shared/service/common.service';
+import { CommonService } from 'src/app/global/service/common.service';
 
 @Injectable({
   providedIn: 'root'

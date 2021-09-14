@@ -3,13 +3,23 @@
     <ion-title size='small'>
       College Application Management
     </ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" *ngIf='!isLoggedIn'>
       <ion-button fill='outline'
         *ngFor="let element of headerElements"
         routerLinkActive='active'
         [routerLink]='element.link'>
         <ion-icon [name]="element.icon"></ion-icon>
         <ion-text>{{element.title}}</ion-text>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" *ngIf='isLoggedIn'>
+      <ion-button routerLinkActive='active' fill='outline' routerLink='/home'>
+        <ion-text>
+          Admin List
+        </ion-text>
+      </ion-button>
+      <ion-button (click)='logout()'>
+       <ion-text>Logout</ion-text>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { User } from 'src/app/interfaces/user/user';
-import { CommonService } from 'src/app/shared/service/common.service';
+import { CommonService } from 'src/app/global/service/common.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

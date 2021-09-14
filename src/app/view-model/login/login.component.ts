@@ -1,10 +1,13 @@
+/* eslint-disable no-underscore-dangle */
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/global/auth/auth.service';
+import { userData } from 'src/app/global/modules/login/login';
 import { User } from 'src/app/interfaces/user/user';
 import { LoginService } from 'src/app/model/login/login.service';
 import { CommonValidationService } from 'src/app/utils/services/validation/common-validation.service';
-
 @Component({
   selector: 'app-login',
   templateUrl: '../../view/login/login.component.html',
@@ -16,12 +19,22 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private commonValidationService: CommonValidationService,
     private loginService: LoginService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private authService: AuthService,
+    private router: Router) { 
+    this.checkAuthLogin();
+
+    }
 
   ngOnInit() {
     this.initializeProperties();
   }
 
+  checkAuthLogin(): void {
+    if (localStorage.getItem('id')) {
+      this.router.navigate(['/home']);
+    }
+  }
   initializeProperties(): void {
     this.initializeLoginForm();
   }
@@ -46,7 +59,9 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loginService.loginUser(this.loginForm.value).subscribe((res: {data: User}) => {
+      this.authService.isLogIn(res.data?._id);
       localStorage.setItem('id', res.data?._id);
+      this.router.navigate(['/home']);
     }, (error) => {
       this.toastr.error(error);
     });
