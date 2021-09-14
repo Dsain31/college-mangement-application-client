@@ -21,7 +21,7 @@
             <ion-text class="ion-padding" 
               *ngIf='username.invalid && (username.dirty || username.touched || isSubmitted)'
               color='danger'>
-              {{getErrorMessage({formControl: username, formControlName:'Username or Email', maxLength: 20})}}
+              {{getErrorMessage({formControl: username, formControlName:'Username or Email'})}}
             </ion-text>
           </ion-col>
         </ion-row>
