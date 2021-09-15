@@ -1,0 +1,40 @@
+<ion-content>
+  <ion-grid *ngIf="applicationList?.length > 0">
+    <ion-row class="ion-padding">
+      <ion-col size='12' *ngFor='let application of applicationList'>
+        <ion-grid>
+          <ion-card class='ion-padding'>
+          <ion-row>
+            <ion-col size-sm='auto' size-md='6' size-lg='9'>
+              <ion-text color='success'>
+                <h4><ion-icon name="person"></ion-icon>{{ application.fullName | capitalize }}</h4>
+              </ion-text>
+              <ion-text *ngIf="application.mobileNumber">
+                <ion-icon name="call"></ion-icon> {{application.mobileNumber}} 
+              </ion-text>
+              <b>{{application.course}}</b> 
+              <ion-buttons><ion-button (click)="showApplicationData(application)">Read more....</ion-button></ion-buttons>
+            </ion-col>
+            <ion-col>
+            </ion-col>
+          </ion-row>
+          </ion-card>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div *ngIf='commonAttribute.userListCount > commonAttribute.limit'>
+    <pagination [totalItems]="commonAttribute.userListCount" 
+      (pageChanged)="pageChanged($event)"
+      [maxSize]='commonAttribute.maxSize' 
+      [itemsPerPage]='commonAttribute.limit'>
+    </pagination>
+  </div>
+
+ <app-application-form
+    [courseFormData]="courseFormData"
+    [isDisable]="isDisable"
+    [isEditable]="isEditable"
+    (courseFormApplied)="onSubmit($event)"
+  ></app-application-form>  
+</ion-content>
