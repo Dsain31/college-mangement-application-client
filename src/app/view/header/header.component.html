@@ -22,14 +22,14 @@
       </ion-button>
       <ion-button routerLinkActive='active' 
         fill='outline' routerLink='/student-list'
-        *ngIf='role === userRole.ADMIN'>
+        *ngIf='role === userRole.ADMIN || role === userRole.SUPER_ADMIN'>
         <ion-text>
           Student List
         </ion-text>
       </ion-button>
       <ion-button routerLinkActive='active' 
         fill='outline' routerLink='/application-list'
-        *ngIf='role === userRole.ADMIN || role === userRole.USER'>
+        *ngIf='role === userRole.ADMIN || role === userRole.USER || role === userRole.SUPER_ADMIN'>
         <ion-text>
          Application List
         </ion-text>

@@ -19,7 +19,6 @@ export class AdminListComponent implements OnInit {
   userList: User[];
   actionList: typeof actionList;
   commonStatus: typeof CommonStatus;
-  showChipsByColor: typeof showActionByColor;
   constructor(
     private router: Router,
     private homeService: HomeService,
@@ -35,7 +34,6 @@ export class AdminListComponent implements OnInit {
     this.commonAttribute = commonAttributes;
     this.actionList = actionList;
     this.commonStatus = CommonStatus;
-    this.showChipsByColor = showActionByColor;;
   }
 
   checkAuthLogin(): void {

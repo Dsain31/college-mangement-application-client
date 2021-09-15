@@ -12,7 +12,7 @@ import { CapitalizePipe } from 'src/app/utils/pipe/capitalize.pipe';
 
 
 @NgModule({
-  declarations: [AdminListComponent, CapitalizePipe],
+  declarations: [AdminListComponent],
   imports: [
     CommonModule,
     IonicModule,
