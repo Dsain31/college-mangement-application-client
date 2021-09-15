@@ -1,6 +1,8 @@
 import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
 import { AuthService } from 'src/app/global/auth/auth.service';
 import { commonAttributes, TypeAttribute, userData } from 'src/app/global/model/common/common.model';
 import { User } from 'src/app/interfaces/user/user';
@@ -12,7 +14,7 @@ import { UserRoles } from 'src/app/utils/constants/user-roles/user.roles';
   templateUrl: '../../view/home/home.component.html',
   styleUrls: ['../../view/home/home.component.scss'],
 })
-export class HomeComponent implements OnInit, AfterContentChecked {
+export class HomeComponent implements OnInit {
   commonAttribute: TypeAttribute<typeof commonAttributes, any>;
   userList: User[];
   constructor(private authService: AuthService,
@@ -25,15 +27,12 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   ngOnInit() {
     this.checkAuthLogin();
     this.commonAttribute = commonAttributes;
-    this.getUserList(this.commonAttribute.limit, this.commonAttribute.skip);
-    this.getUserListCount(UserRoles.USER);
+   this.getUserListAndCount(this.commonAttribute.limit, this.commonAttribute.skip);
   }
 
-  ngAfterContentChecked() {}
 
   checkAuthLogin(): void {
     this.authService.user$.subscribe((value: typeof userData) => {
-      console.log('home', value);
       if (value._id) {
         this.router.navigate(['/home']);
       } else {
@@ -51,15 +50,26 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     });
   }
 
-  getUserListCount(role: number) {
+  getUserListCount(role?: number) {
     const queryObj = {role};
     this.homeService.getUserListCount(queryObj).subscribe((res) => {
-      console.log(res);
+      this.commonAttribute.userListCount = res.data || 0;
+    },(error) => {
+      this.toastr.error(error);
     });
   }
 
-  changePage(event: any) {
-    console.log(event);
+  pageChanged(event: PageChangedEvent): void {
+    const startItem = (event.page - 1) * event.itemsPerPage;
+    window.scrollTo(0, 0)// for top scroll
+    this.getUserList(this.commonAttribute.limit, startItem);
+  }
+
+  getUserListAndCount(limit: number, skip: number, role?: number) {
+    forkJoin([
+      this.getUserList(limit, skip, role),
+      this.getUserListCount(role)
+    ]);
   }
 
 }

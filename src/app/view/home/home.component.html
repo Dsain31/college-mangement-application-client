@@ -9,10 +9,8 @@
             </ion-text>
             <ion-text>
               <small><b>{{user.email}}</b></small>
-            </ion-text>
-            <ion-text>
               <p>{{user.address}}</p> 
-              <span> Created By {{user.createdDate | date}}</span>
+              <span> Created On {{user.createdDate | date}}</span>
             </ion-text>
             <ion-text>
             </ion-text>
@@ -21,6 +19,11 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div>
+  <div *ngIf='commonAttribute.userListCount > commonAttribute.limit'>
+    <pagination [totalItems]="commonAttribute.userListCount" 
+      (pageChanged)="pageChanged($event)"
+      [maxSize]='commonAttribute.maxSize' 
+      [itemsPerPage]='commonAttribute.limit'>
+    </pagination>
   </div>
 </ion-content>
