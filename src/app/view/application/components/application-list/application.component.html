@@ -1,7 +1,8 @@
 <ion-content>
+  <ion-button (click)="editApplicationData()">Apply Application</ion-button>
   <ion-grid *ngIf="applicationList?.length > 0">
     <ion-row class="ion-padding">
-      <ion-col size='12' *ngFor='let application of applicationList'>
+      <ion-col size='12' *ngFor='let application of applicationList; let index = index'>
         <ion-grid>
           <ion-card class='ion-padding'>
           <ion-row>
@@ -14,8 +15,27 @@
               </ion-text>
               <b>{{application.course}}</b> 
               <ion-buttons><ion-button (click)="showApplicationData(application)">Read more....</ion-button></ion-buttons>
+              <ion-chip *ngIf='application.status === commonStatus.ACTIVE' color='success'>
+                <ion-text><b>Accepted</b></ion-text>
+              </ion-chip>
+              <ion-chip *ngIf='application.status === commonStatus.PENDING' color='warning'>
+                <ion-label><b>PENDING</b></ion-label>
+              </ion-chip>
+              <ion-chip *ngIf='application.status === commonStatus.DECLINE' color='danger'>
+              <ion-label><b>Rejected</b></ion-label>
+            </ion-chip>
             </ion-col>
-            <ion-col>
+            <ion-col size-sm='auto' size-md='6' size-lg='3'>
+              <ion-select placeholder="Action" 
+                interface="popover"
+                (ionChange)='actionSelected($event, application.id, index)'
+                mode='ios'>
+                <ion-select-option 
+                  *ngFor='let action of actionList'
+                  [value]='action.status' >
+                  {{action.action}}
+                </ion-select-option>
+              </ion-select>
             </ion-col>
           </ion-row>
           </ion-card>
@@ -31,7 +51,7 @@
     </pagination>
   </div>
 
- <app-application-form
+ <app-application-form *ngIf='role === userRole.USER'
     [courseFormData]="courseFormData"
     [isDisable]="isDisable"
     [isEditable]="isEditable"

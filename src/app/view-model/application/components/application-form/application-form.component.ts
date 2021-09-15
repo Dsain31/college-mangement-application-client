@@ -120,6 +120,10 @@ export class ApplicationFormComponent implements OnInit, AfterContentChecked, On
   patchData() {
     if (this.isDisable) {
       this.courseForm.patchValue(this.courseFormData);
+      this.courseForm.disable();
+    }
+    if (this.isEditable) {
+      this.courseForm.patchValue(this.courseFormData);
     }
   }
 

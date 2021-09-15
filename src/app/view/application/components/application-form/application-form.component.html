@@ -1,4 +1,4 @@
-<ion-grid *ngIf='role === userRole.USER'>
+<ion-grid>
   <ion-row class="ion-padding">
     <ion-col size='12'>
       
@@ -16,7 +16,7 @@
                     <ion-col>
                       <ion-item>
                         <ion-label position='floating'>Full Name</ion-label>
-                        <ion-input [disabled]='isDisable' type='text' name='fullName' placeholder='Enter Full Name'
+                        <ion-input  type='text' name='fullName' placeholder='Enter Full Name'
                           clearInput='true' formControlName='fullName'>
                         </ion-input>
                       </ion-item>
@@ -27,7 +27,7 @@
                     <ion-col>
                       <ion-item>
                         <ion-label position='floating'>Father's Name</ion-label>
-                        <ion-input [disabled]='isDisable' type='text' name='fatherName' 
+                        <ion-input  type='text' name='fatherName' 
                           clearInput='true' formControlName='fatherName'
                           placeholder="Enter Father's Name">
                         </ion-input>
@@ -39,7 +39,7 @@
                     <ion-col>
                       <ion-item>
                         <ion-label position='floating'>Mother's Name</ion-label>
-                        <ion-input [disabled]='isDisable' type='text' name='motherName' 
+                        <ion-input  type='text' name='motherName' 
                           clearInput='true' formControlName='motherName'
                           placeholder="Enter Mother's Name">
                         </ion-input>
@@ -53,7 +53,7 @@
                     <ion-col>
                       <ion-item>
                         <ion-label position='floating'>Age</ion-label>
-                        <ion-input [disabled]='isDisable' type='text' name='lName' placeholder='Enter age'
+                        <ion-input  type='text' name='lName' placeholder='Enter age'
                           clearInput='true' formControlName='age'>
                         </ion-input>
                       </ion-item>
@@ -65,7 +65,7 @@
                     <ion-col>
                       <ion-item>
                         <ion-label position='floating'>Mobile Number</ion-label>
-                        <ion-input [disabled]='isDisable' type='text' name='mNumber' clearInput='true' 
+                        <ion-input  type='text' name='mNumber' clearInput='true' 
                           formControlName='mobileNumber' placeholder='Enter Mobile Number'>
                         </ion-input>
                       </ion-item>
@@ -81,7 +81,7 @@
                     <ion-col>
                       <ion-item>
                         <ion-label position='floating'>Address</ion-label>
-                        <ion-input [disabled]='isDisable' type='text' name='address' clearInput='true' 
+                        <ion-input  type='text' name='address' clearInput='true' 
                            formControlName='address' placeholder="Enter address">
                         </ion-input>
                       </ion-item>
@@ -96,7 +96,7 @@
                     <ion-col>
                       <ion-item>
                         <ion-label position='floating'>Class 12th Marks(%)</ion-label>
-                        <ion-input [disabled]='isDisable' placeholder="Enter marks" clearInput='true' 
+                        <ion-input  placeholder="Enter marks" clearInput='true' 
                           formControlName='seniorClassMarks' >
                         </ion-input>
                       </ion-item>
@@ -107,7 +107,7 @@
                     <ion-col>
                       <ion-item>
                         <ion-label position='floating'>Class 10th Marks(%)</ion-label>
-                        <ion-input [disabled]='isDisable' placeholder="Enter marks" clearInput='true' 
+                        <ion-input  placeholder="Enter marks" clearInput='true' 
                           formControlName='secondaryClassMarks' >
                         </ion-input>
                       </ion-item>
@@ -121,7 +121,7 @@
                     <ion-col>
                       <ion-item>
                         <ion-label>Which Subject do you have?</ion-label>
-                        <ion-select [disabled]='isDisable' placeholder="Select subject" interface="popover" 
+                        <ion-select  placeholder="Select subject" interface="popover" 
                           formControlName='subject' mode='ios'>
                           <ion-select-option *ngFor='let subject of subjectList' [value]="subject">
                              {{subject}}
@@ -138,7 +138,7 @@
                     <ion-col>
                       <ion-item>
                         <ion-label>Which Course do you want to apply?</ion-label>
-                        <ion-select [disabled]='isDisable' placeholder="Select course" interface="popover" 
+                        <ion-select  placeholder="Select course" interface="popover" 
                           formControlName='course' mode='ios'>
                           <ion-select-option *ngFor='let course of courseList' [value]="course">
                              {{course}}

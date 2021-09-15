@@ -9,4 +9,7 @@ export interface Application {
     secondaryClassMarks: string;
     seniorClassMarks: string;
     status: number;
+    userId: string;
+    subject: string;
+    id: string;
 }

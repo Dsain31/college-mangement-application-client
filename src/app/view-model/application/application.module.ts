@@ -8,6 +8,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ApplicationFormComponent } from './components/application-form/application-form.component';
+import { ApplicationService } from 'src/app/model/application.service';
 
 
 
@@ -26,6 +27,7 @@ import { ApplicationFormComponent } from './components/application-form/applicat
         path: '', component: ApplicationComponent
       }
     ])
-  ]
+  ],
+  providers: [ApplicationService]
 })
 export class ApplicationModule { }

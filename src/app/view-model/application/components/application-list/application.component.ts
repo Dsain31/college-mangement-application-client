@@ -3,9 +3,11 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/global/auth/auth.service';
 import { TypeAttribute, commonAttributes, actionList } from 'src/app/global/model/common/common.model';
 import { Application } from 'src/app/interfaces/applicaiton/application';
+import { ApplicationService } from 'src/app/model/application.service';
 import { CommonStatus } from 'src/app/utils/constants/common/common.status';
 import { UserRoles } from 'src/app/utils/constants/user-roles/user.roles';
 import { CommonValidationService } from 'src/app/utils/services/validation/common-validation.service';
@@ -38,10 +40,9 @@ export class ApplicationComponent implements OnInit, AfterContentChecked {
     "status": 0
   }];
   constructor(
-    private commonValidationService: CommonValidationService,
     private router: Router,
-    private fb: FormBuilder,
-    private authService: AuthService
+    private applicationService: ApplicationService,
+    private toastr: ToastrService,
   ) {
    }
 
@@ -69,7 +70,12 @@ export class ApplicationComponent implements OnInit, AfterContentChecked {
   }
 
   onSubmit(data: Application): void {
-    console.log(this.applicationList);
+    data.userId = localStorage.getItem('id') ? localStorage.getItem('id'): '';
+    this.applicationService.createApplication(data).subscribe((res) => {
+      this.toastr.success(res.message);
+    }, (error) => {
+      this.toastr.error(error);
+    });
   }
  
   pageChanged(event: PageChangedEvent): void {
@@ -78,8 +84,28 @@ export class ApplicationComponent implements OnInit, AfterContentChecked {
     // this.getUserList(this.commonAttribute.limit, startItem, UserRoles.ADMIN);
   }
 
-  showApplicationData(application: Application) {
-    this.isDisable = true;
+  showApplicationData(application?: Application) {
+    this.isEditable = true;
     this.courseFormData = application;
+  }
+
+  editApplicationData(application?: Application) {
+    this.isEditable = true;
+    this.courseFormData = application;
+  }
+
+  updateApplication(id: string, status: number, index: number): void {
+    this.applicationService.updateApplicationById(id, {status}).subscribe((res) => {
+      this.toastr.success(res.message);
+      this.applicationList[index].status= status;
+      this.toastr.success(res.message);
+    }, (error) => {
+      this.toastr.error(error);
+    });
+  }
+
+  actionSelected(event: Event, id: string, index: number): void {
+    const target = event.target as HTMLInputElement;
+    this.updateApplication(id, +target.value, index);
   }
 }
