@@ -7,7 +7,7 @@ export const registerUserSelectRole = [
 ] as const;
 
 export const educationList = ['Elementary', 'Middle School', 'High School'] as const;
-export const departmentList = [
+export const courseList = [
     'Biology', 'Computer Science', 'History',
     'Mathematics', 'Physics', 'Accounting',
     'Economics and Finance', 'Counseling',
