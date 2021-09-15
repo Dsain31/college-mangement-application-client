@@ -4,8 +4,6 @@ import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/global/auth/auth.service';
-import { userData } from 'src/app/global/modules/login/login';
-import { User } from 'src/app/interfaces/user/user';
 import { LoginService } from 'src/app/model/login/login.service';
 import { CommonValidationService } from 'src/app/utils/services/validation/common-validation.service';
 @Component({
@@ -61,6 +59,7 @@ export class LoginComponent implements OnInit {
     this.loginService.loginUser(this.loginForm.value).subscribe((res) => {
       this.authService.isLogIn(res.data?._id);
       localStorage.setItem('id', res.data?._id);
+      this.toastr.success(res.message);
       this.router.navigate(['/home']);
     }, (error) => {
       this.toastr.error(error);

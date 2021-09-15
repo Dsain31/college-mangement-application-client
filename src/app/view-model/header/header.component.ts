@@ -2,8 +2,7 @@ import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/global/auth/auth.service';
-import { headerElements } from 'src/app/global/modules/header/header.elements';
-import { userData } from 'src/app/global/modules/login/login';
+import { headerElements } from 'src/app/global/model/header/header.elements';
 import SystemConstants from 'src/app/utils/constants/system/system.constants';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { registerUserSelectRole, educationList, departmentList, subjectList } from 'src/app/global/modules/register/register';
+import { registerUserSelectRole, educationList, departmentList, subjectList } from 'src/app/global/model/register/register.model';
 import { RegisterService } from 'src/app/model/register/register.service';
 import { CommonStatus } from 'src/app/utils/constants/common/common.status';
 import { UserRoles } from 'src/app/utils/constants/user-roles/user.roles';
@@ -124,12 +124,7 @@ export class RegisterComponent implements OnInit {
   changeFormByRole(event: Event): void {
     const role = (event.target as HTMLInputElement).value;
     if(+role === this.userRole.ADMIN) {
-      const resetValidations = ['userRole', 'fName', 'lName', 'department', 'password', 'username', 'email'];
-      Object.keys(this.registerForm.controls).forEach(key => {
-        if (!resetValidations.includes(key)) {
-          this.registerForm.removeControl(key);
-        }
-      });
+      this.removeFormControlForAdminRole();
       this.isStudent = false;
     } else {
       this.initializeLoginForm();
@@ -144,6 +139,15 @@ export class RegisterComponent implements OnInit {
       this.registerForm.removeControl('department');
       this.registerForm.updateValueAndValidity();
     }
+  }
+
+  removeFormControlForAdminRole() {
+    const resetValidations = ['userRole', 'fName', 'lName', 'department', 'password', 'username', 'email'];
+      Object.keys(this.registerForm.controls).forEach(key => {
+        if (!resetValidations.includes(key)) {
+          this.registerForm.removeControl(key);
+        }
+      });
   }
 
 }

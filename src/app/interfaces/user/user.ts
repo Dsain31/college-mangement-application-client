@@ -8,6 +8,7 @@ export interface User {
     password: string;
     status: number;
     userRole: number;
+    address: string;
     username: string;
     _id: string;
 }

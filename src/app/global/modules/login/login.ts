@@ -1,1 +1,0 @@
-export let userData = {_id: localStorage.getItem('id')};

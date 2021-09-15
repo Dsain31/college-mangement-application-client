@@ -1,3 +1,26 @@
-<p>
-  home works!
-</p>
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row class="ion-padding">
+      <ion-col size='12' 
+        *ngFor='let user of userList'>
+          <ion-card class="ion-padding" >
+            <ion-text *ngIf='user.fName' color='success'>
+              <h5><ion-icon name="person"></ion-icon>{{ (user.fName | capitalize) + ' ' + user.lName }}</h5>
+            </ion-text>
+            <ion-text>
+              <small><b>{{user.email}}</b></small>
+            </ion-text>
+            <ion-text>
+              <p>{{user.address}}</p> 
+              <span> Created By {{user.createdDate | date}}</span>
+            </ion-text>
+            <ion-text>
+            </ion-text>
+            
+          </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div>
+  </div>
+</ion-content>
