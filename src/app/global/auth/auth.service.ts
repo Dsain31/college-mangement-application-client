@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { userData } from '../model/common/common.model';
+import { BehaviorSubject } from 'rxjs';
 
 
 Injectable({
     providedIn: 'root'
 });
 export class AuthService {
-    public subject = new BehaviorSubject<typeof userData>(userData);
-    public user$: Observable<typeof userData> = this.subject.asObservable();
+    public subject = new BehaviorSubject<boolean>(false);
+    public user$ = this.subject.asObservable();
 
-    async isLogIn(value: string) {
-        await this.subject.next({_id: value});
+    async isLogIn(value: boolean) {
+        await this.subject.next(value);
     }
 }

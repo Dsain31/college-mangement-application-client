@@ -32,7 +32,21 @@ export class LoginComponent implements OnInit {
 
   checkAuthLogin(): void {
     if (localStorage.getItem('id')) {
-      this.router.navigate(['/admin-list']);
+      if (localStorage.getItem('role')) {
+        const userRole = +localStorage.getItem('role');
+        const userRoleCases = {
+          [UserRoles.ADMIN]: () => {
+            this.router.navigate(['student-list']);
+          },
+          [UserRoles.USER]: () => {
+            this.router.navigate(['dashboard']);
+          },
+          [UserRoles.SUPER_ADMIN]: () => {
+            this.router.navigate(['admin-list']);
+          }
+        };
+        userRoleCases[userRole]();
+      }
     }
   }
 
@@ -60,9 +74,9 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loginService.loginUser(this.loginForm.value).subscribe((res) => {
-      this.authService.isLogIn(res.data?._id);
       this.toastr.success(res.message);
       localStorage.setItem('id', res.data?._id);
+      this.authService.subject.next(true);
       this.setValueForUserRole(res.data.userRole);
     }, (error) => {
       this.toastr.error(error);
@@ -86,7 +100,7 @@ export class LoginComponent implements OnInit {
       },
       [UserRoles.USER]: () => {
         localStorage.setItem('role', String(userRole));
-        this.router.navigate(['application-list']);
+        this.router.navigate(['dashboard']);
       },
       [UserRoles.SUPER_ADMIN]: () => {
         localStorage.setItem('role', String(userRole));

@@ -38,8 +38,23 @@ export class AdminListComponent implements OnInit {
 
   checkAuthLogin(): void {
     if (localStorage.getItem('id')) {
-      this.initializeProperties();
-      this.getUserListAndCount(this.commonAttribute.limit, this.commonAttribute.skip, UserRoles.ADMIN);
+      if (localStorage.getItem('role')) {
+        const userRole = +localStorage.getItem('role');
+        const userRoleCases = {
+          [UserRoles.ADMIN]: () => {
+            this.initializeProperties();
+            this.getUserListAndCount(this.commonAttribute.limit, this.commonAttribute.skip, UserRoles.ADMIN);
+          },
+          [UserRoles.USER]: () => {
+            this.router.navigate(['dashboard']);
+          },
+          [UserRoles.SUPER_ADMIN]: () => {
+            this.initializeProperties();
+           this.getUserListAndCount(this.commonAttribute.limit, this.commonAttribute.skip, UserRoles.ADMIN);
+          }
+        };
+        userRoleCases[userRole]();
+      }
     }
   }
 

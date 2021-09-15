@@ -49,8 +49,8 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div *ngIf='commonAttribute.userListCount > commonAttribute.limit'>
-    <pagination [totalItems]="commonAttribute.userListCount" 
+  <div *ngIf='commonAttribute?.userListCount > commonAttribute.limit'>
+    <pagination [totalItems]="commonAttribute?.userListCount" 
       (pageChanged)="pageChanged($event)"
       [maxSize]='commonAttribute.maxSize' 
       [itemsPerPage]='commonAttribute.limit'>

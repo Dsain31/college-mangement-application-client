@@ -1,3 +1,61 @@
-<p>
-  dashboard works!
-</p>
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-padding">
+      <ion-col size='12'>
+        
+        <ion-grid>
+          <ion-card >
+          
+            <ion-row>
+            <ion-col>
+                <h4>Course</h4>
+                <form [formGroup]='courseForm' (ngSubmit)='onSubmit()'>
+
+                  <ion-grid>
+                    
+                    <ion-row>
+                      <ion-col>
+                        <ion-item>
+                          <ion-label position='floating'>Enter Full Name</ion-label>
+                          <ion-input type='text' name='fullName' 
+                            clearInput='true'>
+                          </ion-input>
+                        </ion-item>
+                      </ion-col>
+                    <!-- </ion-row>
+                    <ion-row> -->
+                      <ion-col>
+                        <ion-item>
+                          <ion-label position='floating'>Enter Father's Name</ion-label>
+                          <ion-input type='text' name='password' clearInput='true' formControlName='password'>
+                          </ion-input>
+                        </ion-item>
+                      </ion-col>
+                      <ion-col>
+                        <ion-item>
+                          <ion-label position='floating'>Enter Father's Name</ion-label>
+                          <ion-input type='text' name='password' clearInput='true' formControlName='password'>
+                          </ion-input>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row class="ion-margin-top">
+                      <ion-col>
+                        <ion-button type='submit'>
+                          Log in</ion-button>
+                      </ion-col>
+                    </ion-row>
+            
+                  </ion-grid>
+
+                </form>
+            </ion-col>
+          </ion-row>
+
+          </ion-card>
+        </ion-grid>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
