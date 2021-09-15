@@ -19,8 +19,8 @@ const routes: Routes = [
     loadChildren: () => import('./view-model/student-list/student-list.module').then( m => m.StudentListModule)
   },
   {
-    path: 'dashboard',
-    loadChildren: () => import('./view-model/dashboard/dashboard.module').then( m => m.DashboardModule)
+    path: 'application',
+    loadChildren: () => import('./view-model/application/application.module').then( m => m.ApplicationModule)
   },
   {
     path: '',

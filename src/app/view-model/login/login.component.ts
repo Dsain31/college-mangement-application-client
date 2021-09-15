@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['student-list']);
           },
           [UserRoles.USER]: () => {
-            this.router.navigate(['dashboard']);
+            this.router.navigate(['application']);
           },
           [UserRoles.SUPER_ADMIN]: () => {
             this.router.navigate(['admin-list']);
@@ -100,7 +100,7 @@ export class LoginComponent implements OnInit {
       },
       [UserRoles.USER]: () => {
         localStorage.setItem('role', String(userRole));
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['application']);
       },
       [UserRoles.SUPER_ADMIN]: () => {
         localStorage.setItem('role', String(userRole));

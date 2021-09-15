@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
-import { TypeAttribute, commonAttributes, actionList, showActionByColor } from 'src/app/global/model/common/common.model';
+import { TypeAttribute, commonAttributes, actionList } from 'src/app/global/model/common/common.model';
 import { User } from 'src/app/interfaces/user/user';
 import { HomeService } from 'src/app/model/home/home.service';
 import { CommonStatus } from 'src/app/utils/constants/common/common.status';
@@ -46,7 +46,7 @@ export class AdminListComponent implements OnInit {
             this.getUserListAndCount(this.commonAttribute.limit, this.commonAttribute.skip, UserRoles.ADMIN);
           },
           [UserRoles.USER]: () => {
-            this.router.navigate(['dashboard']);
+            this.router.navigate(['application']);
           },
           [UserRoles.SUPER_ADMIN]: () => {
             this.initializeProperties();

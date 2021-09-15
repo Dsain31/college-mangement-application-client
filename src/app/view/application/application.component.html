@@ -2,6 +2,26 @@
   <ion-grid>
     <ion-row class="ion-padding">
       <ion-col size='12'>
+        <ion-grid>
+          <ion-card class='ion-padding'>
+          <ion-row>
+          </ion-row>
+          </ion-card>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div *ngIf='commonAttribute.userListCount > commonAttribute.limit'>
+    <pagination [totalItems]="commonAttribute.userListCount" 
+      (pageChanged)="pageChanged($event)"
+      [maxSize]='commonAttribute.maxSize' 
+      [itemsPerPage]='commonAttribute.limit'>
+    </pagination>
+  </div>
+
+  <ion-grid *ngIf='role === userRole.USER'>
+    <ion-row class="ion-padding">
+      <ion-col size='12'>
         
         <ion-grid>
           <ion-card >

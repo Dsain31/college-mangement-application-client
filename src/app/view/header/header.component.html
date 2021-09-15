@@ -28,10 +28,9 @@
         </ion-text>
       </ion-button>
       <ion-button routerLinkActive='active' 
-        fill='outline' routerLink='/application-list'
-        *ngIf='role === userRole.ADMIN || role === userRole.SUPER_ADMIN'>
+        fill='outline' routerLink='/application'>
         <ion-text>
-         Application List
+         Application
         </ion-text>
       </ion-button>
       <ion-button (click)='logout()'>
