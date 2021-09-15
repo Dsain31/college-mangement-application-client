@@ -3,17 +3,18 @@ import { Router } from '@angular/router';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
-import { actionList, commonAttributes, showActionByColor, TypeAttribute } from 'src/app/global/model/common/common.model';
+import { TypeAttribute, commonAttributes, actionList, showActionByColor } from 'src/app/global/model/common/common.model';
 import { User } from 'src/app/interfaces/user/user';
 import { HomeService } from 'src/app/model/home/home.service';
 import { CommonStatus } from 'src/app/utils/constants/common/common.status';
+import { UserRoles } from 'src/app/utils/constants/user-roles/user.roles';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: '../../view/home/home.component.html',
-  styleUrls: ['../../view/home/home.component.scss'],
+  selector: 'app-admin-list',
+  templateUrl: '../../view/admin-list/admin-list.component.html',
+  styleUrls: ['../../view/admin-list/admin-list.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class AdminListComponent implements OnInit {
   commonAttribute: TypeAttribute<typeof commonAttributes, any>;
   userList: User[];
   actionList: typeof actionList;
@@ -40,9 +41,7 @@ export class HomeComponent implements OnInit {
   checkAuthLogin(): void {
     if (localStorage.getItem('id')) {
       this.initializeProperties();
-      this.getUserListAndCount(this.commonAttribute.limit, this.commonAttribute.skip);
-    } else {
-      this.router.navigate(['/login']);
+      this.getUserListAndCount(this.commonAttribute.limit, this.commonAttribute.skip, UserRoles.USER);
     }
   }
 
@@ -90,5 +89,4 @@ export class HomeComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-
 }

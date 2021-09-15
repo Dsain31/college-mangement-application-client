@@ -17,7 +17,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [BrowserModule,
     IonicModule.forRoot(),
     CommonModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      closeButton: true
+    }),
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule

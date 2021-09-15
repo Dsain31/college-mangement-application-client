@@ -30,7 +30,6 @@ export class HeaderComponent implements OnInit, AfterContentChecked {
     if (localStorage.getItem('id')) {
       this.isLoggedIn = true;
     } else {
-      this.router.navigate(['/login']);
       this.isLoggedIn = false;
     }
   }

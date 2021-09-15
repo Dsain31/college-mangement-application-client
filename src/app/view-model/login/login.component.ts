@@ -31,9 +31,7 @@ export class LoginComponent implements OnInit {
 
   checkAuthLogin(): void {
     if (localStorage.getItem('id')) {
-      this.router.navigate(['/home']);
-    } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/admin-list']);
     }
   }
 
@@ -63,7 +61,7 @@ export class LoginComponent implements OnInit {
     this.loginService.loginUser(this.loginForm.value).subscribe((res) => {
       this.authService.isLogIn(res.data?._id);
       this.toastr.success(res.message);
-      this.router.navigate(['/home']);
+      this.router.navigate(['admin-list']);
       localStorage.setItem('id', res.data?._id);
     }, (error) => {
       this.toastr.error(error);
