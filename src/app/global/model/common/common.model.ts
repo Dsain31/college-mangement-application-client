@@ -1,4 +1,4 @@
-import { CommonStatus } from "src/app/utils/constants/common/common.status";
+import { CommonStatus } from 'src/app/utils/constants/common/common.status';
 
 export const userData = {_id: localStorage.getItem('id')};
 

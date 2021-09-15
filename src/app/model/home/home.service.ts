@@ -40,8 +40,7 @@ export class HomeService {
   }
 
   updateUserById(id: string, updateData: any): Observable<AjaxResponse<string>> {
-    const params: HttpParams = new HttpParams()
-      .set('id', id)
+    const params: HttpParams = new HttpParams().set('id', id);
     return this.http.put<AjaxResponse<string>>(this.apiUrl + '/user/update',updateData, { params })
       .pipe(
         catchError(this.commonService.handleError) // then handle the error

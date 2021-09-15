@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private toastr: ToastrService,
     private authService: AuthService,
-    private router: Router) { 
+    private router: Router) {
 
     }
 
