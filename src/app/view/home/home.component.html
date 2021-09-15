@@ -3,19 +3,37 @@
     <ion-row class="ion-padding">
       <ion-col size='12' 
         *ngFor='let user of userList'>
-          <ion-card class="ion-padding" >
-            <ion-text *ngIf='user.fName' color='success'>
-              <h5><ion-icon name="person"></ion-icon>{{ (user.fName | capitalize) + ' ' + user.lName }}</h5>
-            </ion-text>
-            <ion-text>
-              <small><b>{{user.email}}</b></small>
-              <p>{{user.address}}</p> 
-              <span> Created On {{user.createdDate | date}}</span>
-            </ion-text>
-            <ion-text>
-            </ion-text>
-            
+        <ion-grid>
+          <ion-card class='ion-padding'>
+          <ion-row>
+            <ion-col size-sm='auto' size-md='6' size-lg='9'>
+                <ion-text *ngIf='user.fName' color='success'>
+                  <h5><ion-icon name="person"></ion-icon>{{ (user.fName | capitalize) + ' ' + user.lName }}</h5>
+                </ion-text>
+                <ion-text>
+                  <small><b>{{user.email}}</b></small>
+                  <p>{{user.address}}</p> 
+                  <span> Created On {{user.createdDate | date}}</span>
+                </ion-text>
+                <ion-chip [disabled]="true">
+                  <ion-label>Disabled Chip</ion-label>
+                </ion-chip>
+            </ion-col>
+            <ion-col size-sm='auto' size-md='6' size-lg='3'>
+              <ion-select placeholder="Action" 
+                interface="popover"
+                (ionChange)='selectAction($event)'
+                mode='ios'>
+                <ion-select-option 
+                  *ngFor='let action of actionList'
+                  [value]='action.status' >
+                  {{action.action}}
+                </ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
           </ion-card>
+        </ion-grid>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -7,7 +7,7 @@ import {SharedModule} from 'src/app/shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CapitalizePipe } from 'src/app/utils/pipe/capitalize.pipe';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 @NgModule({
   declarations: [HomeComponent, CapitalizePipe],
   imports: [
@@ -16,6 +16,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     SharedModule,
     PaginationModule.forRoot(),
     ReactiveFormsModule,
+    BsDropdownModule.forRoot(),
     RouterModule.forChild([
       {
         path: '', component: HomeComponent

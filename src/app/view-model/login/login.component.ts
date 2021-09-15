@@ -20,19 +20,23 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService,
     private authService: AuthService,
     private router: Router) { 
-    this.checkAuthLogin();
 
     }
 
   ngOnInit() {
     this.initializeProperties();
+    this.checkAuthLogin();
   }
+
 
   checkAuthLogin(): void {
     if (localStorage.getItem('id')) {
       this.router.navigate(['/home']);
+    } else {
+      this.router.navigate(['/login']);
     }
   }
+
   initializeProperties(): void {
     this.initializeLoginForm();
   }
@@ -59,8 +63,10 @@ export class LoginComponent implements OnInit {
     this.loginService.loginUser(this.loginForm.value).subscribe((res) => {
       this.authService.isLogIn(res.data?._id);
       localStorage.setItem('id', res.data?._id);
-      this.toastr.success(res.message);
-      this.router.navigate(['/home']);
+      setTimeout(() => {
+        this.toastr.success(res.message);
+        this.router.navigate(['/home']);
+      }, 1000)
     }, (error) => {
       this.toastr.error(error);
     });

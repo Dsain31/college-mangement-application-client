@@ -4,7 +4,7 @@ import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 import { AuthService } from 'src/app/global/auth/auth.service';
-import { commonAttributes, TypeAttribute, userData } from 'src/app/global/model/common/common.model';
+import { actionList, commonAttributes, TypeAttribute, userData } from 'src/app/global/model/common/common.model';
 import { User } from 'src/app/interfaces/user/user';
 import { HomeService } from 'src/app/model/home/home.service';
 import { UserRoles } from 'src/app/utils/constants/user-roles/user.roles';
@@ -17,6 +17,7 @@ import { UserRoles } from 'src/app/utils/constants/user-roles/user.roles';
 export class HomeComponent implements OnInit {
   commonAttribute: TypeAttribute<typeof commonAttributes, any>;
   userList: User[];
+  actionList: typeof actionList;
   constructor(private authService: AuthService,
     private router: Router,
     private homeService: HomeService,
@@ -26,15 +27,18 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.checkAuthLogin();
-    this.commonAttribute = commonAttributes;
-   this.getUserListAndCount(this.commonAttribute.limit, this.commonAttribute.skip);
   }
 
+  initializeProperties() {
+    this.commonAttribute = commonAttributes;
+    this.actionList = actionList;
+  }
 
   checkAuthLogin(): void {
     this.authService.user$.subscribe((value: typeof userData) => {
       if (value._id) {
-        this.router.navigate(['/home']);
+        this.initializeProperties();
+        this.getUserListAndCount(this.commonAttribute.limit, this.commonAttribute.skip);
       } else {
         this.router.navigate(['/login']);
       }
@@ -70,6 +74,11 @@ export class HomeComponent implements OnInit {
       this.getUserList(limit, skip, role),
       this.getUserListCount(role)
     ]);
+  }
+
+  selectAction(event: Event) {
+    const target = event.target as HTMLInputElement;
+    console.log(target.value);
   }
 
 }
