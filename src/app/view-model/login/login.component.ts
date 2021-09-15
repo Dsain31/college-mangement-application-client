@@ -62,11 +62,9 @@ export class LoginComponent implements OnInit {
     }
     this.loginService.loginUser(this.loginForm.value).subscribe((res) => {
       this.authService.isLogIn(res.data?._id);
+      this.toastr.success(res.message);
+      this.router.navigate(['/home']);
       localStorage.setItem('id', res.data?._id);
-      setTimeout(() => {
-        this.toastr.success(res.message);
-        this.router.navigate(['/home']);
-      }, 1000)
     }, (error) => {
       this.toastr.error(error);
     });

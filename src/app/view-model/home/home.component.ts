@@ -1,13 +1,12 @@
-import { AfterContentChecked, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
-import { AuthService } from 'src/app/global/auth/auth.service';
-import { actionList, commonAttributes, TypeAttribute, userData } from 'src/app/global/model/common/common.model';
+import { actionList, commonAttributes, showActionByColor, TypeAttribute } from 'src/app/global/model/common/common.model';
 import { User } from 'src/app/interfaces/user/user';
 import { HomeService } from 'src/app/model/home/home.service';
-import { UserRoles } from 'src/app/utils/constants/user-roles/user.roles';
+import { CommonStatus } from 'src/app/utils/constants/common/common.status';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +17,9 @@ export class HomeComponent implements OnInit {
   commonAttribute: TypeAttribute<typeof commonAttributes, any>;
   userList: User[];
   actionList: typeof actionList;
-  constructor(private authService: AuthService,
+  commonStatus: typeof CommonStatus;
+  showChipsByColor: typeof showActionByColor;
+  constructor(
     private router: Router,
     private homeService: HomeService,
     private toastr: ToastrService
@@ -32,17 +33,17 @@ export class HomeComponent implements OnInit {
   initializeProperties() {
     this.commonAttribute = commonAttributes;
     this.actionList = actionList;
+    this.commonStatus = CommonStatus;
+    this.showChipsByColor = showActionByColor;;
   }
 
   checkAuthLogin(): void {
-    this.authService.user$.subscribe((value: typeof userData) => {
-      if (value._id) {
-        this.initializeProperties();
-        this.getUserListAndCount(this.commonAttribute.limit, this.commonAttribute.skip);
-      } else {
-        this.router.navigate(['/login']);
-      }
-    });
+    if (localStorage.getItem('id')) {
+      this.initializeProperties();
+      this.getUserListAndCount(this.commonAttribute.limit, this.commonAttribute.skip);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   getUserList(limit: number, skip: number, role?: number) {
@@ -65,7 +66,7 @@ export class HomeComponent implements OnInit {
 
   pageChanged(event: PageChangedEvent): void {
     const startItem = (event.page - 1) * event.itemsPerPage;
-    window.scrollTo(0, 0)// for top scroll
+    window.scrollTo(0, 0);// for top scroll
     this.getUserList(this.commonAttribute.limit, startItem);
   }
 
@@ -76,9 +77,18 @@ export class HomeComponent implements OnInit {
     ]);
   }
 
-  selectAction(event: Event) {
+  actionSelected(event: Event, id: string, index: number): void {
     const target = event.target as HTMLInputElement;
-    console.log(target.value);
+    this.updateUser(id, +target.value, index);
+  }
+
+  updateUser(id: string, status: number, index: number): void {
+    this.homeService.updateUserById(id, {status}).subscribe((res) => {
+      this.toastr.success(res.message);
+      this.userList[index].status= status;
+    }, (error) => {
+      this.toastr.error(error);
+    });
   }
 
 }

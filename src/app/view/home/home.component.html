@@ -2,7 +2,7 @@
   <ion-grid>
     <ion-row class="ion-padding">
       <ion-col size='12' 
-        *ngFor='let user of userList'>
+        *ngFor='let user of userList; let index = index'>
         <ion-grid>
           <ion-card class='ion-padding'>
           <ion-row>
@@ -15,14 +15,26 @@
                   <p>{{user.address}}</p> 
                   <span> Created On {{user.createdDate | date}}</span>
                 </ion-text>
-                <ion-chip [disabled]="true">
-                  <ion-label>Disabled Chip</ion-label>
+                <ion-chip
+                  *ngIf='user.status === commonStatus.ACTIVE'
+                  color='success'>
+                  <ion-text><b>Accepted</b></ion-text>
+                </ion-chip>
+                <ion-chip
+                  *ngIf='user.status === commonStatus.PENDING'
+                  color='warning'>
+                  <ion-label><b>PENDING</b></ion-label>
+                </ion-chip>
+                <ion-chip
+                  *ngIf='user.status === commonStatus.DECLINE'
+                   color='danger'>
+                  <ion-label><b>Rejected</b></ion-label>
                 </ion-chip>
             </ion-col>
             <ion-col size-sm='auto' size-md='6' size-lg='3'>
               <ion-select placeholder="Action" 
                 interface="popover"
-                (ionChange)='selectAction($event)'
+                (ionChange)='actionSelected($event, user._id, index)'
                 mode='ios'>
                 <ion-select-option 
                   *ngFor='let action of actionList'
