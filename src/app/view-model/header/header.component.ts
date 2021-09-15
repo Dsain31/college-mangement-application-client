@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/global/auth/auth.service';
 import { headerElements } from 'src/app/global/model/header/header.elements';
 import SystemConstants from 'src/app/utils/constants/system/system.constants';
+import { UserRoles } from 'src/app/utils/constants/user-roles/user.roles';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,8 @@ import SystemConstants from 'src/app/utils/constants/system/system.constants';
 export class HeaderComponent implements OnInit, AfterContentChecked {
   headerElements: typeof headerElements;
   isLoggedIn = false;
+  role: number;
+  userRole: typeof UserRoles;
   constructor( private authService: AuthService,
     private toastr: ToastrService,
     private router: Router) {
@@ -28,6 +31,8 @@ export class HeaderComponent implements OnInit, AfterContentChecked {
 
   checkAuthLogin(): void {
     if (localStorage.getItem('id')) {
+      this.role = JSON.parse(localStorage.getItem('role'));
+      this.userRole = UserRoles;
       this.isLoggedIn = true;
     } else {
       this.isLoggedIn = false;

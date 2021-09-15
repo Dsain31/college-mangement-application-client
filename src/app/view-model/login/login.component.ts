@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/global/auth/auth.service';
 import { LoginService } from 'src/app/model/login/login.service';
+import { UserRoles } from 'src/app/utils/constants/user-roles/user.roles';
 import { CommonValidationService } from 'src/app/utils/services/validation/common-validation.service';
 @Component({
   selector: 'app-login',
@@ -61,8 +62,8 @@ export class LoginComponent implements OnInit {
     this.loginService.loginUser(this.loginForm.value).subscribe((res) => {
       this.authService.isLogIn(res.data?._id);
       this.toastr.success(res.message);
-      this.router.navigate(['admin-list']);
       localStorage.setItem('id', res.data?._id);
+      this.setValueForUserRole(res.data.userRole);
     }, (error) => {
       this.toastr.error(error);
     });
@@ -75,6 +76,24 @@ export class LoginComponent implements OnInit {
       maxLength: options?.maxLength,
       minLength:options?.minLength
     });
+  }
+
+  setValueForUserRole(userRole: number) {
+    const userRoleCases = {
+      [UserRoles.ADMIN]: () => {
+        localStorage.setItem('role', String(userRole));
+        this.router.navigate(['student-list']);
+      },
+      [UserRoles.USER]: () => {
+        localStorage.setItem('role', String(userRole));
+        this.router.navigate(['application-list']);
+      },
+      [UserRoles.SUPER_ADMIN]: () => {
+        localStorage.setItem('role', String(userRole));
+        this.router.navigate(['admin-list']);
+      }
+    };
+    userRoleCases[userRole]();
   }
 
 }

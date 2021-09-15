@@ -13,9 +13,25 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end" *ngIf='isLoggedIn'>
-      <ion-button routerLinkActive='active' fill='outline' routerLink='/home'>
+      <ion-button routerLinkActive='active' 
+        fill='outline' routerLink='/admin-list'
+        *ngIf='role === userRole.SUPER_ADMIN'>
         <ion-text>
           Admin List
+        </ion-text>
+      </ion-button>
+      <ion-button routerLinkActive='active' 
+        fill='outline' routerLink='/student-list'
+        *ngIf='role === userRole.ADMIN'>
+        <ion-text>
+          Student List
+        </ion-text>
+      </ion-button>
+      <ion-button routerLinkActive='active' 
+        fill='outline' routerLink='/application-list'
+        *ngIf='role === userRole.ADMIN || role === userRole.USER'>
+        <ion-text>
+         Application List
         </ion-text>
       </ion-button>
       <ion-button (click)='logout()'>

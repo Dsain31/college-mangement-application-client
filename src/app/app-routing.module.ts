@@ -15,6 +15,10 @@ const routes: Routes = [
     loadChildren: () => import('./view-model/admin-list/admin-list.module').then( m => m.AdminListModule)
   },
   {
+    path: 'student-list',
+    loadChildren: () => import('./view-model/student-list/student-list.module').then( m => m.StudentListModule)
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'

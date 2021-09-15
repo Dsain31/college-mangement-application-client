@@ -41,7 +41,7 @@ export class AdminListComponent implements OnInit {
   checkAuthLogin(): void {
     if (localStorage.getItem('id')) {
       this.initializeProperties();
-      this.getUserListAndCount(this.commonAttribute.limit, this.commonAttribute.skip, UserRoles.USER);
+      this.getUserListAndCount(this.commonAttribute.limit, this.commonAttribute.skip, UserRoles.ADMIN);
     }
   }
 
@@ -66,7 +66,7 @@ export class AdminListComponent implements OnInit {
   pageChanged(event: PageChangedEvent): void {
     const startItem = (event.page - 1) * event.itemsPerPage;
     window.scrollTo(0, 0);// for top scroll
-    this.getUserList(this.commonAttribute.limit, startItem);
+    this.getUserList(this.commonAttribute.limit, startItem, UserRoles.ADMIN);
   }
 
   getUserListAndCount(limit: number, skip: number, role?: number) {
