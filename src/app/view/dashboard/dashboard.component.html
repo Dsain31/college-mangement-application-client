@@ -8,7 +8,7 @@
           
             <ion-row>
             <ion-col>
-                <h4>Course</h4>
+                <h4>Submission Form</h4>
                 <form [formGroup]='courseForm' (ngSubmit)='onSubmit()'>
 
                   <ion-grid>
@@ -33,10 +33,49 @@
                       </ion-col>
                       <ion-col>
                         <ion-item>
-                          <ion-label position='floating'>Enter Father's Name</ion-label>
+                          <ion-label position='floating'>Enter Mother's Name</ion-label>
                           <ion-input type='text' name='password' clearInput='true' formControlName='password'>
                           </ion-input>
                         </ion-item>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col>
+                        <ion-item>
+                          <ion-label position='floating'>Age</ion-label>
+                          <ion-input type='text' name='lName' clearInput='true' formControlName='age'>
+                          </ion-input>
+                        </ion-item>
+                        <ion-text class="ion-padding" *ngIf='age.invalid && (age.dirty || age.touched )'
+                          color='danger'>
+                          {{getErrorMessage({formControl: age, formControlName:'Age', maxLength: 2})}}
+                        </ion-text>
+                      </ion-col>
+                      <ion-col>
+                        <ion-item>
+                          <ion-label position='floating'>Mobile Number</ion-label>
+                          <ion-input type='text' name='mNumber' clearInput='true' formControlName='mobileNumber'>
+                          </ion-input>
+                        </ion-item>
+                        <ion-text class="ion-padding" *ngIf='mNumber.invalid && (mNumber.dirty || mNumber.touched )'
+                          color='danger'>
+                          <small>{{getErrorMessage({formControl: mNumber, formControlName:'Mobile Number', maxLength: 10, minLength:10})}}</small>
+                        </ion-text>
+                      </ion-col>
+
+                    </ion-row>
+
+                    <ion-row>
+                      <ion-col>
+                        <ion-item>
+                          <ion-label position='floating'>Address</ion-label>
+                          <ion-input type='text' name='address' clearInput='true' formControlName='address'>
+                          </ion-input>
+                        </ion-item>
+                        <ion-text class="ion-padding" *ngIf='address.invalid && (address.dirty || address.touched )'
+                          color='danger'>
+                          <small>{{getErrorMessage({formControl: address, formControlName:'Address'})}}</small>
+                        </ion-text>
                       </ion-col>
                     </ion-row>
                     <ion-row class="ion-margin-top">

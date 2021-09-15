@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { AuthService } from 'src/app/global/auth/auth.service';
+import { CommonStatus } from 'src/app/utils/constants/common/common.status';
 import { CommonValidationService } from 'src/app/utils/services/validation/common-validation.service';
 
 @Component({
@@ -13,6 +14,7 @@ import { CommonValidationService } from 'src/app/utils/services/validation/commo
 })
 export class DashboardComponent implements OnInit {
   courseForm: FormGroup;
+  isSubmitted: boolean;
   constructor(
     private commonValidationService: CommonValidationService,
     private router: Router,
@@ -31,8 +33,13 @@ export class DashboardComponent implements OnInit {
 
   initializeLoginForm(): void {
     this.courseForm = this.fb.group({
-      username: ['', this.commonValidationService.setCustomValidatorMethods()],
-      password: ['', this.commonValidationService.setCustomValidatorMethods({min: 6, max: 16})]
+      address: ['', [Validators.required]],
+      mobileNumber: ['', this.commonValidationService.setCustomValidatorMethods({max: 10, isNumericPattern: true})],
+      age: ['', this.commonValidationService.setCustomValidatorMethods({max: 2, isNumericPattern: true})],
+      education: ['', [Validators.required]],
+      subject: ['', [Validators.required]],
+      status: [CommonStatus.PENDING]
+
     });
   }
   checkAuthLogin(): void {
@@ -51,5 +58,23 @@ export class DashboardComponent implements OnInit {
       maxLength: options?.maxLength,
       minLength:options?.minLength
     });
+  }
+
+  get subject(): AbstractControl {
+    return this.courseForm.get('subject');
+  }
+  get mNumber(): AbstractControl {
+    return this.courseForm.get('mobileNumber');
+  }
+  get address(): AbstractControl {
+    return this.courseForm.get('address');
+  }
+
+  get age(): AbstractControl {
+    return this.courseForm.get('age');
+  }
+
+  get education(): AbstractControl {
+    return this.courseForm.get('education');
   }
 }

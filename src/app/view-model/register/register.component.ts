@@ -18,9 +18,6 @@ export class RegisterComponent implements OnInit {
   userRole: typeof UserRoles;
   userSelectRoleList: typeof registerUserSelectRole;
   isStudent = true;
-  educationList: typeof educationList;
-  departmentList: typeof departmentList;
-  subjectList: typeof subjectList;
   constructor(private fb: FormBuilder,
     private commonValidationService: CommonValidationService,
     private registerService: RegisterService,
@@ -34,24 +31,15 @@ export class RegisterComponent implements OnInit {
     this.initializeLoginForm();
     this.userRole = UserRoles;
     this.userSelectRoleList = registerUserSelectRole;
-    this.educationList = educationList;
-    this.departmentList = departmentList;
-    this.subjectList = subjectList;
   }
   initializeLoginForm(): void {
     this.registerForm = this.fb.group({
-      userRole: [UserRoles.USER, [Validators.required]],
+      userRole: ['', [Validators.required]],
       fName: ['', [Validators.required]],
       lName: ['', [Validators.required]],
       username: ['', this.commonValidationService.setCustomValidatorMethods({max: 20})],
       email: ['', this.commonValidationService.setCustomValidatorMethods({min:6, isEmailPattern: true})],
       password: ['', this.commonValidationService.setCustomValidatorMethods({min: 6, max: 16})],
-      address: ['', [Validators.required]],
-      mobileNumber: ['', this.commonValidationService.setCustomValidatorMethods({max: 10, isNumericPattern: true})],
-      age: ['', this.commonValidationService.setCustomValidatorMethods({max: 2, isNumericPattern: true})],
-      education: ['', [Validators.required]],
-      department: ['', [Validators.required]],
-      subject: ['', [Validators.required]],
       status: [CommonStatus.PENDING]
     });
   }
@@ -77,36 +65,14 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('email');
   }
 
-  get mNumber(): AbstractControl {
-    return this.registerForm.get('mobileNumber');
-  }
-  get address(): AbstractControl {
-    return this.registerForm.get('address');
-  }
-
-  get age(): AbstractControl {
-    return this.registerForm.get('age');
-  }
-
-  get education(): AbstractControl {
-    return this.registerForm.get('education');
-  }
-  get department(): AbstractControl {
-    return this.registerForm.get('department');
-  }
-  get subject(): AbstractControl {
-    return this.registerForm.get('subject');
-  }
-
   onSubmit() {
-    this.removeDepartmentControl();
     if (this.registerForm.invalid) {
       this.isSubmitted = true;
       return;
     }
     this.registerService.registerUser(this.registerForm.value).subscribe((res) => {
       this.toastr.success(res.message);
-      this.registerForm.reset();
+      this.initializeLoginForm();
     }, error => {
       this.toastr.error(error);
     });
@@ -119,35 +85,6 @@ export class RegisterComponent implements OnInit {
       maxLength: options?.maxLength,
       minLength:options?.minLength
     });
-  }
-
-  changeFormByRole(event: Event): void {
-    const role = (event.target as HTMLInputElement).value;
-    if(+role === this.userRole.ADMIN) {
-      this.removeFormControlForAdminRole();
-      this.isStudent = false;
-    } else {
-      this.initializeLoginForm();
-      this.registerForm.removeControl('department');
-      this.isStudent = true;
-    }
-    this.registerForm.updateValueAndValidity();
-  }
-
-  removeDepartmentControl() {
-    if(this.isStudent) {
-      this.registerForm.removeControl('department');
-      this.registerForm.updateValueAndValidity();
-    }
-  }
-
-  removeFormControlForAdminRole() {
-    const resetValidations = ['userRole', 'fName', 'lName', 'department', 'password', 'username', 'email'];
-      Object.keys(this.registerForm.controls).forEach(key => {
-        if (!resetValidations.includes(key)) {
-          this.registerForm.removeControl(key);
-        }
-      });
   }
 
 }
