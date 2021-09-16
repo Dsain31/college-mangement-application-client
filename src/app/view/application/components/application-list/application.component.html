@@ -1,5 +1,15 @@
 <ion-content>
-  <ion-button (click)="editApplicationData()">Apply Application</ion-button>
+  <ion-button fill='outline' *ngIf='role === userRole.USER'
+    (click)="isFormVisibleForm = !isFormVisibleForm" >
+    {{isFormVisibleForm ? 'Apply Application': 'Cancel'}}
+  </ion-button>
+  <app-application-form *ngIf='role === userRole.USER && (isEditable || !isFormVisibleForm || isDisable)'
+  [courseFormData]="courseFormData" id="exampleModal"
+  [isDisable]="isDisable"
+  [isEditable]="isEditable"
+  (courseFormApplied)="onSubmit($event)"
+  (courseFormEdited)="updateApplication($event)"
+></app-application-form>  
   <ion-grid *ngIf="applicationList?.length > 0">
     <ion-row class="ion-padding">
       <ion-col size='12' *ngFor='let application of applicationList; let index = index'>
@@ -13,22 +23,24 @@
               <ion-text *ngIf="application.mobileNumber">
                 <ion-icon name="call"></ion-icon> {{application.mobileNumber}} 
               </ion-text>
-              <b>{{application.course}}</b> 
-              <ion-buttons><ion-button (click)="showApplicationData(application)">Read more....</ion-button></ion-buttons>
-              <ion-chip *ngIf='application.status === commonStatus.ACTIVE' color='success'>
-                <ion-text><b>Accepted</b></ion-text>
+              <b>{{application.course}} </b> 
+              <a (click)="showApplicationData(application)"
+                data-toggle="modal" data-target="#exampleModal"> Read more....</a>
+                <ion-chip *ngIf='application.status === commonStatus.ACTIVE' color='success'>
+                  <ion-text><b>Accepted</b></ion-text>
+                </ion-chip>
+                <ion-chip *ngIf='application.status === commonStatus.PENDING' color='warning'>
+                  <ion-label><b>PENDING</b></ion-label>
+                </ion-chip>
+                <ion-chip *ngIf='application.status === commonStatus.DECLINE' color='danger'>
+                <ion-label><b>Rejected</b></ion-label>
               </ion-chip>
-              <ion-chip *ngIf='application.status === commonStatus.PENDING' color='warning'>
-                <ion-label><b>PENDING</b></ion-label>
-              </ion-chip>
-              <ion-chip *ngIf='application.status === commonStatus.DECLINE' color='danger'>
-              <ion-label><b>Rejected</b></ion-label>
-            </ion-chip>
             </ion-col>
-            <ion-col size-sm='auto' size-md='6' size-lg='3'>
+            
+            <ion-col size-sm='auto' size-md='6' size-lg='3' *ngIf="role !== userRole.USER">
               <ion-select placeholder="Action" 
                 interface="popover"
-                (ionChange)='actionSelected($event, application.id, index)'
+                (ionChange)='actionSelected($event, application._id, index, template)'
                 mode='ios'>
                 <ion-select-option 
                   *ngFor='let action of actionList'
@@ -37,24 +49,52 @@
                 </ion-select-option>
               </ion-select>
             </ion-col>
+
+            <ion-col size-sm='auto' *ngIf="role === userRole.USER && application.status === commonStatus.PENDING" size-md='6'
+              size-lg='3'>
+              <ion-button fill='outline' (click)="editApplicationData(application, index)" shape='round'>Edit</ion-button>
+            </ion-col>
+            <ion-col size-sm='auto' *ngIf="role === userRole.USER && application.status !== commonStatus.PENDING && application?.commentData?.length > 0" size-md='6'
+              size-lg='3'>
+              <ion-button fill='outline' 
+                shape='round' (click)="showComment(index)" >Comment</ion-button>
+            </ion-col>
+            <div *ngIf="application?.commentData?.length > 0 && isVisibleCommentBox && (index === commonAttribute.activeIndex)">
+              <ion-textarea [value]="application.commentData" readonly></ion-textarea>
+            </div>
           </ion-row>
           </ion-card>
         </ion-grid>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div *ngIf='commonAttribute.userListCount > commonAttribute.limit'>
-    <pagination [totalItems]="commonAttribute.userListCount" 
+  <div *ngIf='commonAttribute.applicationListCount > commonAttribute.limit'>
+    <pagination [totalItems]="commonAttribute.applicationListCount" 
       (pageChanged)="pageChanged($event)"
       [maxSize]='commonAttribute.maxSize' 
       [itemsPerPage]='commonAttribute.limit'>
     </pagination>
   </div>
-
- <app-application-form *ngIf='role === userRole.USER'
-    [courseFormData]="courseFormData"
-    [isDisable]="isDisable"
-    [isEditable]="isEditable"
-    (courseFormApplied)="onSubmit($event)"
-  ></app-application-form>  
 </ion-content>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Comment</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ion-item>
+      <ion-label position='floating'>Comment</ion-label>
+      <ion-textarea clearOnEdit="true" [(ngModel)]="commentData"
+        rows="6" cols="20"></ion-textarea>
+    </ion-item>
+    <ion-text *ngIf='isSubmitted' color='danger'>
+      <small>Comment is required</small>
+    </ion-text>
+  </div>
+  <div class="modal-footer">
+    <ion-button type="button" (click)="dismissCommentBox()">Submit</ion-button>
+  </div>
+</ng-template>

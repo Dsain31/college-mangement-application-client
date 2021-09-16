@@ -11,5 +11,6 @@ export interface Application {
     status: number;
     userId: string;
     subject: string;
-    id: string;
+    _id: string;
+    commentData: string;
 }

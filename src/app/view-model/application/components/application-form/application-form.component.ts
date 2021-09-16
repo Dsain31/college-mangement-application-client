@@ -17,6 +17,7 @@ export class ApplicationFormComponent implements OnInit, AfterContentChecked, On
   @Input() isEditable: boolean;
   @Input() courseFormData: Application;
   @Output() courseFormApplied: EventEmitter<Application> = new EventEmitter<Application>();
+  @Output() courseFormEdited: EventEmitter<Application> = new EventEmitter<Application>();
   courseForm: FormGroup;
   isSubmitted: boolean;
   subjectList: typeof subjectList;
@@ -38,7 +39,7 @@ export class ApplicationFormComponent implements OnInit, AfterContentChecked, On
   }
 
   ngOnChanges() {
-    this.patchData();
+    this.initializeProperties();
   }
 
   initializeProperties(): void {
@@ -63,6 +64,7 @@ export class ApplicationFormComponent implements OnInit, AfterContentChecked, On
       status: [CommonStatus.PENDING]
 
     });
+    this.patchData();
   }
 
   onSubmit(): void {
@@ -70,7 +72,11 @@ export class ApplicationFormComponent implements OnInit, AfterContentChecked, On
       this.isSubmitted = true;
       return;
     }
-    this.courseFormApplied.emit(this.courseForm.value);
+    if (this.isEditable) {
+      this.courseFormEdited.emit(this.courseForm.value);
+    } else {
+      this.courseFormApplied.emit(this.courseForm.value);
+    }
   }
   getErrorMessage(options: {formControl: AbstractControl; formControlName: string; maxLength?: number; minLength?: number}): string {
     return this.commonValidationService.getErrorMessage({
@@ -124,6 +130,14 @@ export class ApplicationFormComponent implements OnInit, AfterContentChecked, On
     }
     if (this.isEditable) {
       this.courseForm.patchValue(this.courseFormData);
+    }
+  }
+
+  closeForm() {
+    if(this.isEditable) {
+      this.courseFormEdited.emit(null);
+    } else {
+      this.courseFormApplied.emit(null)
     }
   }
 

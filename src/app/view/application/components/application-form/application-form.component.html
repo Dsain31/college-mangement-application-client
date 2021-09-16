@@ -7,7 +7,7 @@
         
           <ion-row>
           <ion-col>
-              <h4>Submission Form</h4>
+                    <h4>Submission Form</h4> 
               <form [formGroup]='courseForm' (ngSubmit)='onSubmit()'>
 
                 <ion-grid>
@@ -153,15 +153,22 @@
                   <ion-row class="ion-margin-top" *ngIf="!isDisable">
                     <ion-col>
                       <ion-button type='submit' fill='outline' 
-                        expand='block' shape="round">
+                        expand='block'>
                         {{isEditable ? 'Update': 'Apply'}}
                       </ion-button>
                     </ion-col>
-                  </ion-row>
-          
-                </ion-grid>
 
+                    <ion-col >
+                    </ion-col>
+                  </ion-row>
+                  
+                </ion-grid>
+                
               </form>
+              <ion-button fill='outline' *ngIf="isEditable || isDisable"
+                 expand='block' (click)="closeForm()">
+                Close
+              </ion-button>
           </ion-col>
         </ion-row>
 
