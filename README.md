@@ -1,4 +1,4 @@
-"# college-management-application-client" 
+# college-management-application-client" 
 #### Install Angular on local system
    1. clone code from git URL.
    2. install latest angular and node v12.x above.
@@ -6,7 +6,7 @@
    4. To run application----use command <ng serve>.
    5. for local API , need to change path in main.ts file for environment.ts  
 #### Deploy angular on FIREBASE
-  ## Configuration for API URL
+  ### Configuration for API URL
       go to > main.ts file. and import environment.prod.ts file for enableProd() method.
       now change API URL path in environment.prod.ts file.
    1. install firebase cli---<npm install firebase> from project root directory.
