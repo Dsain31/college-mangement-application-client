@@ -7,7 +7,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CapitalizePipe } from 'src/app/utils/pipe/capitalize.pipe';
 
 
 
