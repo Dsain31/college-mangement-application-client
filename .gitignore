@@ -30,3 +30,6 @@ npm-debug.log*
 /platforms
 /plugins
 /www
+.firebase/hosting.d3d3.cache
+.firebaserc
+firebase.json
