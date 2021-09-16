@@ -21,10 +21,10 @@
    * type ***firebase login*** and login with firebase login credentials.
    * then  ***firebase init*** command. this command will give some prompt options. select desired option.
         ##### choose these options
-        ######What do you want to use as your public directory? www
-        ######Configure as a single-page app (rewrite all urls to /index.html)? No
-        Set up automatic builds and deploys with GitHub? No
-        File www/index.html already exists. Overwrite? No
+        ###### What do you want to use as your public directory? www
+        ###### Configure as a single-page app (rewrite all urls to /index.html)? No
+        ###### Set up automatic builds and deploys with GitHub? No
+        ###### File www/index.html already exists. Overwrite? No
    * finally deploy it, by using the command ***firebase deploy***.
 
 #### URL of this project
