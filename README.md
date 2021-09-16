@@ -2,7 +2,7 @@
 #### Install Angular on local system
    1. clone code from git URL.
    2. install latest angular and node v12.x above.
-   3  install project dependency----- use command *npm install* from terminal.
+   3  install project dependency----- use command ***npm install*** from terminal.
    4. To run application----use command *ng serve*.
    5. for local API , need to change path in main.ts file for environment.ts  
 #### Deploy angular on FIREBASE
